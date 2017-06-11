@@ -1,0 +1,28 @@
+# files begin with total number of seats
+650
+
+# format is "<string: party, no spaces> <int: votes>"
+# Data is 2017 UK elections
+# results taken from: http://www.bbc.co.uk/news/election/2017/results
+UUP 83280
+AP 64553
+YP 20958
+NHA 16119
+Tory 13667213
+EngDem 1913
+WRP 771
+sdp 469
+DUP 292316
+SF 238915
+PC 164466
+Green 525371
+UKIP 593852
+SDLP 95419
+Labour 12874985
+SNP 977569
+LibDem 2371772
+Pirate 2321
+CPA 5869
+BNP 4642
+MRLP 3890
+WEP 3580
