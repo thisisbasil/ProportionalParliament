@@ -34,3 +34,5 @@ PartyF = 1 seat
 Total = 96
 
 Parties A through D would get allotted one more. Seats get added until it is full. It will add a seat from A to F, and start back at A, if needed.
+
+Makefile is included. C++11 is used. Not tested in Windows.
