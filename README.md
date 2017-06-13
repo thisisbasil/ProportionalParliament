@@ -7,13 +7,17 @@ votes.
 
 The program takes a file as a command line parameter containing the needed info. It is in the form:
 
-Number of Seats
+
+
+[Number of Seats]
 
 [Party Name1] [Num Votes]
 
 ...
 
 [Party NameN] [Num Votes]
+
+
 
 It uses the strategy design pattern, so a number of different strategies. The one used will be documented in circprop.h.
 
