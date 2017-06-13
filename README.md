@@ -33,6 +33,7 @@ The program takes a file as a command line parameter containing the needed info.
 
 [Party NameN] [Num Votes]
 
+Empty lines and lines commented out with the pound sign (#) are disregarded.
 
 
 It uses the strategy design pattern, so a number of different strategies. The one used will be documented in circprop.h.
