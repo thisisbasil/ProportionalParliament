@@ -4,6 +4,7 @@
 #include "party.h"
 #include <vector>
 #include <string>
+#include <memory>
 using namespace std;
 
 class StrategyBase

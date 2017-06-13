@@ -10,6 +10,7 @@
 #include <cctype>
 #include <sstream>
 #include <algorithm>
+#include <memory>
 #include "party.h"
 #include "strategy.h"
 using namespace std;
@@ -20,7 +21,7 @@ private:
 	double threashold;
 	vector<party> parties;
 	int numseats;
-	StrategyBase* strategy;
+	shared_ptr<StrategyBase> strategy;
 
 public:
 	parseat(double);
@@ -36,7 +37,7 @@ public:
 	int getNumSeats();
 	double getThreashold();
 	void setThreashold(double);
-	bool setStrategy(StrategyBase*);
+	bool setStrategy(shared_ptr<StrategyBase>);
 	void runModel();
 	int getNumParties() { return parties.size(); }
 };

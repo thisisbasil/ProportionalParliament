@@ -1,10 +1,9 @@
 #include "StrategyFactory.h"
 
-StrategyBase* StrategyFacory::getStrategy(string _strategy)
+shared_ptr<StrategyBase> StrategyFacory::getStrategy(string _strategy)
 {
-	StrategyBase* retval;
-
-	for(int i=0; i< _strategy.length(); i++)
+	shared_ptr<StrategyBase> retval;
+	for(unsigned int i=0; i< _strategy.length(); i++)
 	{
 		char c = _strategy[i];
 		c = toupper(c);
@@ -12,9 +11,9 @@ StrategyBase* StrategyFacory::getStrategy(string _strategy)
 	}
 
 	if (_strategy == "CIRCPROP")
-		retval = new CircProp;
+		retval.reset(new CircProp);
 	else
-		retval = new Nothing;
+		retval.reset(new Nothing);
 	
 	return retval;
 }

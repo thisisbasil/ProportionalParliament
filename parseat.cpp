@@ -64,7 +64,7 @@ void parseat::setThreashold(double _threashold)
 	threashold = _threashold;
 }
 
-bool parseat::setStrategy(StrategyBase* _strategy)
+bool parseat::setStrategy(shared_ptr<StrategyBase> _strategy)
 {
 	strategy = _strategy;
 	if (strategy->getName() == "nothing")

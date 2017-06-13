@@ -4,6 +4,7 @@
 #include "strategy.h"
 #include <vector>
 #include <algorithm>
+#include <memory>
 #include <cmath>
 using namespace std;
 

@@ -4,11 +4,12 @@
 #include "circprop.h"
 #include "strategy.h"
 #include <algorithm>
+#include <memory>
 #include <cctype>
 class StrategyFacory
 {
 public:
-	StrategyBase* getStrategy(string);
+	shared_ptr<StrategyBase> getStrategy(string);
 };
 
 #endif
