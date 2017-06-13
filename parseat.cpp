@@ -1,149 +1,77 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <cmath>
-#include <fstream>
-#include <cstdlib>
-#include <cctype>
-#include <sstream>
-#include <algorithm>
-using namespace std;
+#include "parseat.h"
 
-const double THREASHOLD = 0.0009;
-
-struct party
+parseat::parseat(double thr)
 {
-	string name;
-	unsigned long numvotes;
-	unsigned int numseats;
-	double percent;
-	party() { numvotes = numseats = percent = 0; }
-	bool operator>(const party& other) { return numvotes > other.numvotes; }
-	bool operator<(const party& other) { return numvotes < other.numvotes; }
-	bool operator==(const party& other) { return numvotes == other.numvotes; }
-	bool operator!=(const party& other) { return numvotes != other.numvotes; }
-	friend ostream& operator<<(ostream& s, const party& other)
-	{
-		s << "Name: " << other.name 
-		  << "\tVotes: " << other.numvotes
-		  << "\tPercent: " << other.percent
-		  << "\tSeats: " << other.numseats;
-		return s;
-	}
-};
-
-int getNumSeats(ifstream& file)
-{
-	string line;
-	while(getline(file,line))
-	{
-		int temp = atoi(line.c_str());
-		if (temp > 0)
-			return temp;
-	}
-
-	return -1;	
+	threashold = thr;
+	numseats = 0;
+	strategy = nullptr;
 }
 
-bool skipline(string line)
-{
-	if (line[0] == '#' || line[0] == '\0' || isspace(line[0]))	
-		return true;
-	return false;
+parseat::parseat(int ns)
+{ 
+	threashold = 0.0009;
+	numseats = ns;
+	strategy = nullptr;
 }
 
-vector<party> getVoteTallies(ifstream& file, int numseats)
+parseat::parseat()
 {
-	vector<party> retval;
-	string line;
-	unsigned long total=0;
-	while(getline(file,line))
-	{
-		party temp;
-		if(skipline(line))
-			continue;
-		istringstream iss(line);
-		iss >> temp.name;
-		iss >> temp.numvotes;
-		total += temp.numvotes;
-		retval.push_back(temp);
-	}
-	for(vector<party>::iterator it=retval.begin(); 
-	    it!=retval.end(); it++)
-		it->percent = (double)it->numvotes/(double)total;
-			
-	cout << "Number of parties: " << retval.size() << endl;
-	return retval;
+	threashold = 0.0009;
+	numseats = 0;
+	strategy = nullptr;
 }
 
-vector<party> getSeats(ifstream& file, vector<party> parties, int numseats)
+void parseat::add(string name, long votes)
 {
-	vector<party> retval;
-	vector<party>::iterator it;
-	//get quick total
-	unsigned long tot=0;
+	party temp(name, votes);
+	parties.push_back(temp);			
+}
+
+void parseat::clear()
+{
+	parties.clear();
+}
+
+void parseat::printResults()
+{
 	for(auto i : parties)
-		tot+=i.numvotes;
-	cout << "Votes cast: " << tot << endl;
-	
-	//remove irrelevant parties
-	for(it = parties.begin(); it != parties.end(); it++)
-	{
-		if (it->percent > THREASHOLD)
-			retval.push_back(*it);
-	}
-	sort(retval.begin(), retval.end(),
-			[](party const& a, party const& b) 
-			{ 
-				return a.numvotes > b.numvotes; 
-			});
-	int total = 0;
-	for(it=retval.begin(); it!=retval.end(); it++)
-	{
-		it->numseats = floor(it->percent*numseats);
-		if (it->numseats + total > numseats)
-		{
-			it->numseats = numseats - total;
-			total = numseats;
-			break;
-		}
-		total += it->numseats;	
-	}	
-	it = retval.begin();
-	while(total < numseats)
-	{
-		it->numseats++;
-		total++;
-		it++;
-		if (it == retval.end())
-			it=retval.begin();	
-	}
-	return retval;
+		cout << i << endl;
 }
 
-int main(int argc, char** argv)
+void parseat::setNumSeats(int _numseats)
 {
-	if (argc != 2)
-	{
-		cout << "format: parseat <input file>" << endl;
-		return 0;	
-	}
+	numseats = _numseats;
+}
 
-	ifstream file;
-	file.open(argv[1]);
-	if (file.is_open())
-	{
-		int numseats = getNumSeats(file);
-		cout << "Number of seats: " << numseats << endl;
-		vector<party> parties = getVoteTallies(file,numseats);	
-		parties = getSeats(file,parties, numseats);
-		for(auto i : parties)
-			cout << i << endl;	
-	}
-	else
-	{
-		cout << argv[1] << " is not present." << endl;
-		return 1;	
-	}
-	return 1;
+int parseat::getNumSeats()
+{
+	return numseats;
+}
+
+double parseat::getThreashold()
+{
+	return threashold;
+}
+
+void parseat::setThreashold(double _threashold)
+{
+	threashold = _threashold;
+}
+
+void parseat::setStrategy(StrategyBase* _strategy)
+{
+	strategy = _strategy;
+	strategy->setThreashold(threashold);
+	strategy->setParties(parties);
+	strategy->setNumSeats(numseats);
+}
+
+void parseat::runModel()
+{
+		if (strategy == nullptr)
+		{
+				cout << "No strategy has been set!" << endl;
+				return;
+		}
+		parties = strategy->run();	
 }
