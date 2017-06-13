@@ -16,7 +16,7 @@ private:
 	void getPercentages();
 	
 public:
-		CircProp() { totalvotes = 0; }
+		CircProp() { totalvotes = 0; name = "circprop"; }
 		vector<party> run();
 };
 

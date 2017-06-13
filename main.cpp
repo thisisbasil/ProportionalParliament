@@ -9,6 +9,7 @@
 #include <algorithm>
 #include "parseat.h"
 #include "circprop.h"
+#include "StrategyFactory.h"
 using namespace std;
 
 int getNumSeats(ifstream& file)
@@ -58,7 +59,9 @@ int main(int argc, char** argv)
 			iss >> numvotes;
 			model.add(name,numvotes);	
 		}
-		model.setStrategy(new CircProp);
+		
+		StrategyFacory factory;
+		model.setStrategy(factory.getStrategy("circprop"));
 		model.runModel();
 		model.printResults();
 	}

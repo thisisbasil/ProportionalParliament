@@ -36,7 +36,7 @@ public:
 	int getNumSeats();
 	double getThreashold();
 	void setThreashold(double);
-	void setStrategy(StrategyBase*);
+	bool setStrategy(StrategyBase*);
 	void runModel();
 	int getNumParties() { return parties.size(); }
 };

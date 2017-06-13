@@ -2,7 +2,7 @@ CC = g++
 
 FLAGS = -Wall -std=c++11 -g
 
-SRC = main.cpp parseat.cpp strategy.cpp circprop.cpp
+SRC = main.cpp parseat.cpp strategy.cpp circprop.cpp StrategyFactory.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

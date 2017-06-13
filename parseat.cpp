@@ -34,6 +34,12 @@ void parseat::clear()
 
 void parseat::printResults()
 {
+	if (strategy->getName() == "nothing")
+	{
+		cout << "no valid strategy set, exiting" << endl;
+		return;
+	}
+	
 	for(auto i : parties)
 		cout << i << endl;
 }
@@ -58,12 +64,15 @@ void parseat::setThreashold(double _threashold)
 	threashold = _threashold;
 }
 
-void parseat::setStrategy(StrategyBase* _strategy)
+bool parseat::setStrategy(StrategyBase* _strategy)
 {
 	strategy = _strategy;
+	if (strategy->getName() == "nothing")
+		return false;
 	strategy->setThreashold(threashold);
 	strategy->setParties(parties);
 	strategy->setNumSeats(numseats);
+	return true;
 }
 
 void parseat::runModel()
