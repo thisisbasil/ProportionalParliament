@@ -39,7 +39,7 @@ void CircProp::removeIrrelevantAndSort()
 		sort(temp.begin(), temp.end(),
 			[] (party const& a, party const& b)
 			{
-				return a.numvotes > b.numvotes;
+				return a > b;
 			});
 		parties.clear();
 		parties = temp;
