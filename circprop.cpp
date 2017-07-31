@@ -20,16 +20,14 @@ void CircProp::getTotalVotes()
 
 void CircProp::getPercentages()
 {
-		vector<party>::iterator it;
-		for(it = parties.begin(); it != parties.end(); it++)
+		for(auto it = parties.begin(); it != parties.end(); it++)
 			it->percent = (double)it->numvotes/(double)totalvotes;	
 }
 
 void CircProp::removeIrrelevantAndSort()
 {
 		vector<party> temp;
-		vector<party>::iterator it;
-		for(it = parties.begin(); it != parties.end(); it++)
+		for(auto it = parties.begin(); it != parties.end(); it++)
 		{
 			if (it->percent > threashold)
 				temp.push_back(*it);
@@ -48,7 +46,7 @@ void CircProp::removeIrrelevantAndSort()
 void CircProp::getSeats()
 {
 		vector<party>::iterator it;
-		int total = 0;
+		auto total = 0;
 		for(it = parties.begin(); it != parties.end(); it++)
 		{
 				it->numseats = floor(it->percent*numseats);
