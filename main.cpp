@@ -17,7 +17,7 @@ int getNumSeats(ifstream& file)
 	string line;
 	while(getline(file,line))
 	{
-		int temp = atoi(line.c_str());
+		auto temp = atoi(line.c_str());
 		if (temp > 0)
 			return temp;
 	}
@@ -44,7 +44,7 @@ int main(int argc, char** argv)
 	file.open(argv[1]);
 	if (file.is_open())
 	{
-		int numseats = getNumSeats(file);
+		auto numseats = getNumSeats(file);
 		parseat model(numseats);
 		
 		string line;
